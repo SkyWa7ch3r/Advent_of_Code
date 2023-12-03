@@ -51,4 +51,6 @@ In this example, the calibration values are 29, 83, 13, 24, 42, 14, and 76. Addi
 
 **53592**
 
-Time Taken total for both solution: 0.089 seconds (89 milliseconds)
+## Total Time
+
+***Time Taken total for both solution: 0.089 seconds (89 milliseconds)***
