@@ -2,6 +2,8 @@ import cudf as cd
 import cupy as cp
 import time
 
+# TODO switch to the cards using a dictionary with numba, keep track of the number of points for solution one, number of copies for solution 2 and of course the card itself
+
 def solution():
     input = cd.read_text("input.txt", delimiter="\n", strip_delimiters = True)
     input = input.str.split(':').list.get(1).str.split('|')
