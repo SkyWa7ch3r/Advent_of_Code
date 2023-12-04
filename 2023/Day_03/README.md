@@ -64,8 +64,8 @@ In this schematic, there are **two** gears. The first is in the top left; it has
 
 **What is the sum of all of the gear ratios in your engine schematic?**
 
-****
+**74528807**
 
 ## Total Time
 
-***Total Time taken for Solution: ***
+***Total Time taken for Solution: 2.265 seconds***
