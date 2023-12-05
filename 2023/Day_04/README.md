@@ -72,8 +72,8 @@ Once all of the originals and copies have been processed, you end up with **1** 
 
 Process all of the original and copied scratchcards until no more scratchcards are won. **Including the original set of scratchcards, how many total scratchcards do you end up with?**
 
-****
+**6420979**
 
 ## Total Time
 
-***Total Time taken for Solution: ***
+***Total Time taken for Solution: 0.304 seconds (304 milliseconds)***
