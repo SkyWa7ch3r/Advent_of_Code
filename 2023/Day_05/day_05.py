@@ -19,7 +19,7 @@ def find_minimum_location(seed, length, maps, min_location):
         cuda.atomic.min(min_location, 0, location)
 
 def parse_input():
-    input = cd.read_text("test.txt", delimiter='\n', strip_delimiters = True)
+    input = cd.read_text("input.txt", delimiter='\n', strip_delimiters = True)
     seeds = np.array(input[0].split(':')[1].strip().split(' '), dtype = np.int64)
     sections = cd.Series(input[2:][input[2:] == ''].index)
     map_rows = (sections.diff() - 2).max()
@@ -46,7 +46,7 @@ def solution_1(seeds, maps):
             for item_start, section_start, num_range in map:
                 if (item_start == 0 and section_start == 0 and num_range == 0):
                     break
-                if (section_start <= location) and (location <= (section_start + num_range)):
+                if (section_start <= location) and (location < (section_start + num_range)):
                     location = item_start + (location - section_start)
                     break
         if minimum_location > location:
@@ -54,16 +54,35 @@ def solution_1(seeds, maps):
     print(f"The minimum location for the initial seeds is: {minimum_location}")
 
 def solution_2(seeds, maps):
-    # Set minimum value to a functional infinity here (max of int64 - 1)
-    minimum_location = cuda.to_device(np.array([np.iinfo(np.int64).max - 1], dtype = np.int64))
-    maps = cuda.to_device(np.array(maps, dtype = np.int64))
     lengths = seeds[1::2]
     seeds = seeds[0::2]
+    minimum_location = np.iinfo(np.int64).max - 1
     for seed, length in zip(seeds, lengths):
-        threads = 1024
-        blocks = (length + threads) // threads
-        find_minimum_location[blocks, threads](seed, length, maps, minimum_location)
-    print(minimum_location.copy_to_host()[0])
+        locations = [[seed, seed + length - 1]]
+        for map in maps:
+            location_i = 0
+            while location_i < len(locations):
+                loc_start = locations[location_i][0]
+                loc_end = locations[location_i][1]
+                for item, section, num_range in map:
+                    if (item == 0 and section == 0 and num_range == 0):
+                        break
+                    if section <= locations[location_i][0] and section + num_range > locations[location_i][0]:
+                        if loc_end < section + num_range:
+                            locations[location_i][0] = item + loc_start - section
+                            locations[location_i][1] = item + loc_end - section
+                            break
+                        elif loc_end >= section + num_range:
+                            locations[location_i][0] = item + loc_start - section
+                            locations[location_i][1] = item + section + num_range - 1 - section
+                            locations.append([section + num_range, loc_end])
+                            break
+                location_i += 1
+        current_min_location = np.min(np.array(locations)[:, 0])
+        if minimum_location > current_min_location:
+            minimum_location = current_min_location
+    print(f"The minimum location for the initial seeds is: {minimum_location}")
+   
 
 start = time.time()
 seeds, maps = parse_input()
