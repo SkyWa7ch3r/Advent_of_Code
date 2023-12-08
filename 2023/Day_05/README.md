@@ -123,8 +123,8 @@ Consider all of the initial seed numbers listed in the ranges on the first line 
 
 **What is the lowest location number that corresponds to any of the initial seed numbers?**
 
-****
+**57451709**
 
 ## Total Time
 
-***Total Time taken for Solution: ***
+***Total Time taken for Solution: 0.135 seconds***

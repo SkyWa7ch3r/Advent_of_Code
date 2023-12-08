@@ -1,22 +1,6 @@
 import cudf as cd
 import numpy as np
-from numba import cuda
 import time
-
-@cuda.jit()
-def find_minimum_location(seed, length, maps, min_location):
-    seed_idx = cuda.grid(1)
-    if seed_idx < length:
-        location = seed_idx + seed
-        for maps_idx in range(maps.shape[0]):
-            for map_idx in range(maps[maps_idx].shape[0]):
-                item_start = maps[maps_idx, map_idx, 0] 
-                section_start = maps[maps_idx, map_idx, 1] 
-                num_range = maps[maps_idx, map_idx, 2] 
-                if item_start != 0 and section_start !=0 and num_range != 0:
-                    if (section_start <= location) and (location <= (section_start + num_range)):
-                        location = item_start + (location - section_start)
-        cuda.atomic.min(min_location, 0, location)
 
 def parse_input():
     input = cd.read_text("input.txt", delimiter='\n', strip_delimiters = True)
