@@ -23,7 +23,7 @@ This was difficult and I ran out of time with work taking priority.
 
 Got 19 Stars to Day 10
 
-## 2024
+## 2025
 
 Not a lot of time this year, going to do everything with TypeScript.
 
