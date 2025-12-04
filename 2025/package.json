@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "day1": "tsx day_01/index.ts",
-    "day2": "tsx day_02/index.ts"
+    "day2": "tsx day_02/index.ts",
+    "day3": "tsx day_03/index.ts"
   },
   "keywords": [],
   "author": "",
